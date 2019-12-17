@@ -1,8 +1,8 @@
-# [Points_HAUTS](https://ccpfa.github.io/Points_Hauts_UNITEP)
-Une simple page en Leaflet pour afficher le cadastre français à partir des tuiles du Géoportail de l'IGN.
+# [Points HAUTS](https://ccpfa.github.io/Points_Hauts_UNITEP)
+Une simple page en Leaflet pour afficher des points hauts sur le cadastre français.
 On peut importer des fichiers GeoJson.
 
-[Essayer](http://ccpfa.github.io/Vue_Cadastre_IGN)
+[Essayer](https://ccpfa.github.io/Points_Hauts_UNITEP)
 
 utilise:
 - http://makinacorpus.github.io/Leaflet.FileLayer/
