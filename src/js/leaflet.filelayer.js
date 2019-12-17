@@ -41,6 +41,7 @@
             this._parsers = {
                 geojson: this._loadGeoJSON,
                 json: this._loadGeoJSON,
+                JSON: this._loadGeoJSON,
                 gpx: this._convertToGeoJSON,
                 kml: this._convertToGeoJSON,
                 txt: this._loadGeoJSON
@@ -193,7 +194,7 @@
             fileInput.type = 'file';
             fileInput.multiple = 'multiple';
             if (!this.options.formats) {
-                fileInput.accept = '.gpx,.kml,.geojson,.json,.txt';
+                fileInput.accept = '.gpx,.kml,.geojson,.json,.JSON,.txt';
             } else {
                 fileInput.accept = this.options.formats.join(',');
             }
