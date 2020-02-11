@@ -29,6 +29,7 @@
 	<!-- <link rel="stylesheet" href="https://unpkg.com/leaflet.pm@0.25/dist/leaflet.pm.css" /> -->
 	<!-- <script src="https://unpkg.com/leaflet.pm@0.25/dist/leaflet.pm.min.js"></script> -->
 	<link rel="stylesheet" href="./src/easy-button.css" />
+	<script src="./src/leaflet.wms.js"></script>
 	<script src="./src/easy-button.js"></script>
     <style>
     #map {
@@ -149,7 +150,46 @@
 												 //crossOrigin: false,
 												  //edgeBufferTiles: 2,
 												 detectRetina: false, zIndex: 8, attribution: '&copy; IGN, BD Carthage' });
-    var geofoncier_sommets= L.tileLayer.wms("https://api.geofoncier.fr/referentielsoge/ogc/wxs?", {layers: 'RFU_FXX_SOMMETS', format: 'image/png', maxZoom: 20, detectRetina: false, zIndex: 12, transparent: true, attribution: "© GéoFoncier"});
+   	
+
+	var map = L.map('map', {
+		center: [46.5,2.34],
+			zoom: 5,
+		//center: [45.1885,5.7245],
+		//zoom: 13,
+		layers: [osm_light, ign_parcelaire]
+	});
+	
+	var options = {format: "image/png", transparent: "true",info_format: "text/plain",attribution: "© Portail de l'INPN"}
+	var source = L.WMS.source("http://ws.carmencarto.fr/WMS/119/fxx_inpn?",options);
+	var apb = source.getLayer('Arretes_de_protection_de_biotope');
+	var joue = source.getLayer('Sites_d_importance_communautaire_JOUE__ZSC_SIC_');
+	var zico = source.getLayer('ZICO');
+	var zps = source.getLayer('Zones_de_protection_speciale');
+	var sic = source.getLayer('Sites_d_importance_communautaire');
+	var znieff2_mer = source.getLayer('Znieff2_mer');
+	var znieff1_mer = source.getLayer('Znieff1_mer');
+	var znieff1 = source.getLayer('Znieff1');
+	var znieff2 = source.getLayer('Znieff2');
+	var unesco = source.getLayer('Bien_du_patrimoine_mondial_de_l_UNESCO');
+	var rbs = source.getLayer('Reserves_de_la_biosphere');
+	var rnn = source.getLayer('Reserves_naturelles_nationales');
+	var ramsar = source.getLayer('Sites_Ramsar');
+	var tcen = source.getLayer('Terrains_des_Conservatoires_des_espaces_naturels');
+	var tcl = source.getLayer('Terrains_du_Conservatoire_du_Littoral');
+	var pnm = source.getLayer('Parc_naturel_marin');
+	var rncfs = source.getLayer('Reserves_nationales_de_chasse_et_faune_sauvage');
+	var pn = source.getLayer('Parcs_nationaux');
+	var ripn = source.getLayer('Reserves_Integrales_de_Parcs_Nationaux');
+	var rb = source.getLayer('Reserves_biologiques');
+	var pnr = source.getLayer('Parcs_naturels_regionaux');
+	var ospar = source.getLayer('ospar');
+	var rnc = source.getLayer('rnc');
+	var apg = source.getLayer('Arretes_de_protection_de_geotope');
+	var geoparcs = source.getLayer('Geoparcs');
+	var rnr = source.getLayer('Reserves_naturelles_regionales');
+	
+	var geofoncier_sommets= L.tileLayer.wms("https://api.geofoncier.fr/referentielsoge/ogc/wxs?", {layers: 'RFU_FXX_SOMMETS', format: 'image/png', maxZoom: 20, detectRetina: false, zIndex: 12, transparent: true, attribution: "© GéoFoncier"});
     var geofoncier_limites= L.tileLayer.wms("https://api.geofoncier.fr/referentielsoge/ogc/wxs?", {layers: 'RFU_FXX_LIMITES', format: 'image/png', maxZoom: 20, detectRetina: false, zIndex: 11, transparent: true});
     var baseMaps = {
     "OSM": osm,
@@ -163,15 +203,35 @@
 	  "Parcelaire IGN":ign_parcelaire,
       "Limites adm.": ign_lim,
 	  "GeoFoncier": geofoncier_sommets,
-	  "Rivières": carthage
+	  "Rivières": carthage,
+	  "Arrêtés de protection de biotope": apb,
+	  "Sites_d_importance_communautaire_JOUE__ZSC_SIC_": joue,
+	  "ZICO": zico,
+	  "Zones_de_protection_speciale": zps,
+	  "Sites_d_importance_communautaire": sic,
+	  "Znieff2_mer": znieff2_mer,
+	  "Znieff1_mer": znieff1_mer,
+	  "Znieff1": znieff1,
+	  "Znieff2": znieff2,
+	  "Bien_du_patrimoine_mondial_de_l_UNESCO": unesco,
+	  "Reserves_de_la_biosphere": rbs,
+	  "Reserves_naturelles_nationales": rnn,
+	  "Sites_Ramsar": ramsar,
+	  "Terrains_des_Conservatoires_des_espaces_naturels": tcen,
+	  "Terrains_du_Conservatoire_du_Littoral": tcl,
+	  "Parc_naturel_marin": pnm,
+	  "Reserves_nationales_de_chasse_et_faune_sauvage": rncfs,
+	  "Parcs_nationaux": pn,
+	  "Reserves_Integrales_de_Parcs_Nationaux": ripn,
+	  "Reserves_biologiques": rb,
+	  "Parcs_naturels_regionaux": pnr,
+	  "ospar": ospar,
+	  "rnc": rnc,
+	  "Arretes_de_protection_de_geotope": apg,
+	  "Geoparcs": geoparcs,
+	  "Reserves_naturelles_regionales": rnr
        };
-	var map = L.map('map', {
-	    center: [46.5,2.34],
-            zoom: 5,
-	    //center: [45.1885,5.7245],
-	    //zoom: 13,
-	    layers: [osm_light, ign_parcelaire]
-	});
+
 	var hash = new L.Hash(map);
 	L.control.layers(baseMaps,overlays).addTo(map);
 	ign_ortho.setOpacity(0.5);
